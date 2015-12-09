@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h1>
+    Tag candidates
+    <a href="/tag_candidates/new" class="btn btn-lg btn-success">New Tag candidate</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Article</th>
+        <th>Candidate</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @tag_candidates.each do |tag_candidate| %>
+      <tr>
+        <td><%= tag_candidate.article_id %></td>
+        <td><%= tag_candidate.candidate_id %></td>
+        <td>
+          <a href="/tag_candidates/<%= tag_candidate.id %>" class="btn btn-primary">Show</a>
+          <a href="/tag_candidates/<%= tag_candidate.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_tag_candidate/<%= tag_candidate.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

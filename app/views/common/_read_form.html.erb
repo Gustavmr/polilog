@@ -1,0 +1,8 @@
+              <form action="/create_reading" method="post">
+                <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+                <input type="hidden" id="article_id" name="article_id" placeholder="Article" class="form-control" value="<%= article.id %>">
+                <button class="btn btn-primary btn-xs" target="_blank">
+                  Read
+                </button>
+              </form>

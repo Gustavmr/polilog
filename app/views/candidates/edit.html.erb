@@ -1,0 +1,82 @@
+<!-- Validation failure messages -->
+<% if @candidate.errors.any? %>
+  <% @candidate.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Candidate #<%= @candidate.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_candidate/<%= @candidate.id %>" method="post" enctype="multipart/form-data">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for name -->
+      <div class="form-group">
+        <label for="name" class="control-label">
+          Name
+        </label>
+
+        <input type="text" id="name" name="name" placeholder="Name" class="form-control" value="<%= @candidate.name %>">
+      </div>
+
+      <!-- Label and input for party -->
+      <div class="form-group">
+        <label for="party" class="control-label">
+          Party
+        </label>
+
+        <input type="text" id="party" name="party" placeholder="Party" class="form-control" value="<%= @candidate.party %>">
+      </div>
+
+      <!-- Label and input for education_level -->
+
+      <!-- Label and input for bio -->
+      <div class="form-group">
+        <label for="bio" class="control-label">
+          Bio
+        </label>
+
+        <textarea id="bio" name="bio" placeholder="Bio" class="form-control" rows="3"><%= @candidate.bio %></textarea>
+      </div>
+
+      <!-- Label and input for current_position -->
+      <div class="form-group">
+        <label for="current_position" class="control-label">
+          Current position
+        </label>
+
+        <input type="text" id="current_position" name="current_position" placeholder="Current position" class="form-control" value="<%= @candidate.current_position %>">
+      </div>
+
+      <!-- Label and input for previous_position -->
+      <div class="form-group">
+        <label for="new_position" class="control-label">
+          Upcoming Candidacy
+        </label>
+
+        <input type="text" id="new_position" name="new_position" placeholder="Upcoming Candidacy" class="form-control" value="<%= @candidate.new_position %>">
+      </div>
+
+      <div class="form-group">
+        <label for="image" class="control-label">
+          Upload a Candidate Picture
+        </label>
+        <input type="file" id="image" name="image" class="form-control">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Candidate
+      </button>
+      or
+      <a href="/candidates/<%= @candidate.id %>">Cancel</a>
+    </form>
+  </div>
+</div>

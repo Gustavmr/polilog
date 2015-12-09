@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h3>Tag Issue #<%= @tag_issue.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Article</dt>
+      <dd><%= @tag_issue.article_id %></dd>
+
+      <dt>Issue</dt>
+      <dd><%= @tag_issue.issue_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/tag_issues" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/tag_issues/<%= @tag_issue.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_tag_issue/<%= @tag_issue.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

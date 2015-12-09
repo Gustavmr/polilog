@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h3>Tag Candidate #<%= @tag_candidate.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>Article</dt>
+      <dd><%= @tag_candidate.article_id %></dd>
+
+      <dt>Candidate</dt>
+      <dd><%= @tag_candidate.candidate_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/tag_candidates" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/tag_candidates/<%= @tag_candidate.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_tag_candidate/<%= @tag_candidate.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

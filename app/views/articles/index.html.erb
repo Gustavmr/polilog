@@ -1,0 +1,142 @@
+<div class="page-header">
+  <h1>
+    Articles
+    <a href="/articles/new" class="btn btn-lg btn-success btn-sm"><i class="fa fa-plus-circle"></i><strong>Add New</strong></a>
+  </h1>
+</div>
+
+
+<!-- search bar -->
+<div class="row" style="margin-bottom: 30px;">
+  <%= search_form_for @q do |f| %>
+
+  <div class="form-group">
+    <%= f.label :titke_cont, "Search by title:" %>
+    <%= f.text_field :title_cont, :class => "form-control", :placeholder => "Enter a few characters" %>
+  </div>
+
+  <%= f.submit :class => "btn btn-primary btn-sm" %>
+
+  <a href="/articles" class="btn btn-default btn-sm">Clear filters</a>
+
+  <% end %>
+</div>
+
+
+
+    <!-- individual article markup -->
+    <% @articles.each do |article| %>
+    <div class="panel panel-default">
+
+    <!-- Article and ratings row -->
+    <div class="panel-body clearfix" style="display:inline;">
+        <!-- article title & buttons -->
+
+        <!-- article / read form -->
+        <div class="col-sm-7 clearfix" style="display:inline;">
+          <h4 class="list-group-item-heading">
+            <%= article.title %>
+            <!-- read form -->
+            <div style="float: right;">
+            <%= render "common/read_form", article: article%>
+            </div>
+          </h4>
+
+          <div class="row" style="margin: 0px; margin-bottom:10px;">
+            <p class="list-group-item-text hidden-md hidden-lg hidden-xl"><%= truncate(article.description, :length => 30) %>
+            </p>
+            <p class="list-group-item-text hidden-sm hidden-xs"><%= truncate(article.description, :length => 200) %>
+            </p>
+          </div>
+        </div>
+
+        <!-- rating bar and form -->
+        <div class="col-sm-4">
+          <!-- rating bar -->
+          <div class="row" style="margin: 0px;">
+            <%= render "common/bias_bar", article: article%>
+          </div>
+          <!-- rate bias form -->
+          <div class="row" style="margin: 0px;">
+            <%= render "common/bias_form", article: article%>
+          </div>
+        </div>
+    </div>
+
+      <!-- candidate & article taggs -->
+      <div class="panel-footer clearfix" style="padding-bottom:0px;">
+        <div class="col-sm-6">
+          <p>
+            <!-- modal button -->
+            <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm-<%= article.id %>">
+              <i class="fa fa-tag"> +</i>
+            </button>
+
+            <strong style="" >Tagged Candidates:</strong>
+            <small> <%= article.tagged_candidates.pluck(:name).to_sentence %></small>
+
+            <!-- content and modal form -->
+            <div class="modal fade bs-example-modal-sm-<%= article.id %>" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+
+              <div class="modal-dialog modal-sm-<%= article.id %>">
+                <div class="modal-content">
+
+                  <form action="/create_tag_candidate" method="post">
+                    <!-- Hidden input for authenticity token to protect from forgery -->
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+                    <!-- Label and input for article_id -->
+                    <input type="hidden" id="article_id" name="article_id" placeholder="Article" class="form-control" value="<%= article.id %>">
+
+                    <%= select_tag(:candidate_id, options_from_collection_for_select(Candidate.all, :id, :name, @candidate_tag.candidate_id), :class => "form-control") %>
+
+                    <button class="btn btn-info">
+                      Tag to article
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </p>
+        </div>
+
+        <div class="col-sm-6">
+          <p>
+            <!-- modal button -->
+            <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm-<%= article.id %>2">
+              <i class="fa fa-tag"> +</i>
+            </button>
+            <strong>Tagged Issues:</strong>
+            <small> <%= article.tagged_issues.pluck(:title).to_sentence %></small>
+
+            <!-- content and modal form -->
+            <div class="modal fade bs-example-modal-sm-<%= article.id %>2" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+
+              <div class="modal-dialog modal-sm-<%= article.id %>2">
+                <div class="modal-content">
+
+                  <form action="/create_tag_issue" method="post">
+                    <!-- Hidden input for authenticity token to protect from forgery -->
+                    <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+                    <!-- Label and input for article_id -->
+                    <input type="hidden" id="article_id" name="article_id" placeholder="Article" class="form-control" value="<%= article.id %>">
+
+                    <%= select_tag(:issue_id, options_from_collection_for_select(Issue.all, :id, :title, @issue_tag.issue_id), :class => "form-control") %>
+                    <button class="btn btn-info">
+                      Tag to article
+                    </button>
+                  </form>
+
+                </div>
+              </div>
+            </div>
+          </p>
+        </div>
+      </div>
+    </li>
+    </div>
+    <% end %>
+
+
+

@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h3>Follow Candidate #<%= @follow_candidate.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <dl class="dl-horizontal">
+      <dt>User</dt>
+      <dd><%= @follow_candidate.user_id %></dd>
+
+      <dt>Candidate</dt>
+      <dd><%= @follow_candidate.candidate_id %></dd>
+
+    </dl>
+
+    <div class="btn-group btn-group-justified">
+      <a href="/follow_candidates" class="btn btn-primary">
+        Back
+      </a>
+      <a href="/follow_candidates/<%= @follow_candidate.id %>/edit" class="btn btn-warning">
+        Edit
+      </a>
+      <a href="/delete_follow_candidate/<%= @follow_candidate.id %>" class="btn btn-danger" rel="nofollow">
+        Delete
+      </a>
+    </div>
+  </div>
+</div>

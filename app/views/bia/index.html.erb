@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1>
+    Bia
+    <a href="/bia/new" class="btn btn-lg btn-success">New Bium</a>
+  </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>User</th>
+        <th>Article</th>
+        <th>Level</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @bias.each do |bium| %>
+      <tr>
+        <td><%= bium.user_id %></td>
+        <td><%= bium.article_id %></td>
+        <td><%= bium.level %></td>
+        <td>
+          <a href="/bias/<%= bium.id %>" class="btn btn-primary">Show</a>
+          <a href="/bias/<%= bium.id %>/edit" class="btn btn-warning">Edit</a>
+          <a href="/delete_bium/<%= bium.id %>" class="btn btn-danger" rel="nofollow">Delete</a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

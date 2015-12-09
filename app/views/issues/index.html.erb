@@ -1,0 +1,47 @@
+<div class="page-header">
+  <h1>
+    Issues
+    <a href="/issues/new" class="btn btn-lg btn-success btn-sm"><i class="fa fa-plus-circle"></i><strong>Add New</strong></a>
+  </h1>
+</div>
+
+<ul class="nav nav-tabs" style="margin-bottom: 20px;">
+  <li class=""><a href="#all_issues" data-toggle="tab" aria-expanded="false">All Issues</a></li>
+  <li class=""><a href="#my_issues" data-toggle="tab" aria-expanded="false">My Issues</a></li>
+</ul>
+
+<div class="row" style="margin-bottom: 30px;">
+  <%= search_form_for @q do |f| %>
+
+  <div class="form-group">
+    <%= f.label :title_cont, "Search by Title:" %>
+    <%= f.text_field :title_cont, :class => "form-control", :placeholder => "Enter a few characters" %>
+  </div>
+
+  <%= f.submit :class => "btn btn-primary btn-sm" %>
+
+  <a href="/issues" class="btn btn-default btn-sm">Clear filters</a>
+
+  <% end %>
+</div>
+
+
+<div id="myTabContent" class="tab-content">
+
+  <div class="tab-pane fade active in" id="all_issues">
+    <p>
+
+      <%= render partial: "displayissues", locals: {type: "all"} %>
+    </p>
+  </div>
+
+  <div class="tab-pane fade" id="my_issues">
+    <p>
+
+      <%= render partial: "displayissues", locals: {type: "my"} %>
+
+    </p>
+  </div>
+
+</div>
+

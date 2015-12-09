@@ -1,0 +1,70 @@
+        <div class="row">
+          <% if  article.readers.pluck(:id).include?(current_user.id) %>
+
+          <% if article.evals.pluck(:id).include?(current_user.id) %>
+          You already rated this article.
+          <% else %>
+
+          <div class="row" style="margin:0px;">
+
+          <div class="row" style="margin:0px;">
+            <form action="/create_bias" method="post">
+
+              <!-- Hidden input for authenticity token to protect from forgery -->
+              <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+              <!-- Label and input for user_id -->
+              <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+              <input type="hidden" id="article_id" name="article_id" placeholder="Article" class="form-control" value="<%= article.id %>">
+
+
+              <div class="col-xs-9" style="text-align: center; white-space: nowrap">
+                <label class="radio-inline">
+                  <input type="radio" name="level" id="level" value="-2" >
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="level" id="level" value="-1" >
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="level" id="level" value="0" >
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="level" id="level" value="1" >
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="level" id="level" value="2" >
+                </label>
+              </div>
+
+              <div class="col-xs-3">
+                <button class="btn btn-default btn-xs">Rate Bias</button>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="col-xs-9" style="margin-top: 5px;">
+
+            <div class= "col-sm-4" style="text-align: right;">
+              <p class="text-primary">Left</p>
+            </div>
+
+            <div class= "col-sm-4" style="text-align: center;">
+              <p class="text-muted">Low</p>
+            </div>
+
+            <div class= "col-sm-4" style="text-align: left;">
+              <p class="text-primary">Right</p>
+            </div>
+
+          </div>
+        </div>
+
+
+        <% end %>
+
+        <% else %>
+        You must read the article before rating it!
+        <a href="#"  target="_blank" class="btn btn-default btn-xs disabled" style="float:left; margin:3px;">Rate</a>
+
+        <% end %>
+      </div>

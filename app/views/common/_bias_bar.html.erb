@@ -1,0 +1,48 @@
+         <div class="row vertical-bottom">
+
+           <% if  article.bias.pluck(:level).size > 0 %>
+
+             <% right = ((article.bias.pluck(:level).sum / article.bias.pluck(:level).size).to_f)/4 *100 + 50 %>
+             <% left = 100 - right %>
+
+             <% if left > 60 %>
+
+               <% right_text = "" %>
+               <% left_text = "Left Bias" %>
+               <% right_color = "custom" %>
+               <% left_color = "" %>
+
+
+             <% elsif  left < 40 %>
+
+               <% right_text = "Right Bias" %>
+               <% left_text = "" %>
+               <% right_color = "" %>
+               <% left_color = "custom" %>
+
+             <% else %>
+
+               <% right_text = "Low Bias" %>
+               <% left_text = "Low Bias" %>
+               <% right_color = "custom" %>
+               <% left_color = "custom" %>
+
+             <% end %>
+
+           <div class="progress" style="margin-bottom:0px;">
+            <div class="progress-bar progress-bar-<%= left_color %>" style="width: <%= left%>%">
+              <span><%= left_text %><i class="fa fa-hand-o-right"></i></span>
+            </div>
+
+            <div class="progress-bar progress-bar-<%= right_color %>" style="width: <%= right%>%">
+              <span><i class="fa fa-hand-o-left"></i><%= right_text %></span>
+            </div>
+          </div>
+
+          <% else %>
+
+          <p>not rated</p>
+
+          <% end %>
+        </div>
+

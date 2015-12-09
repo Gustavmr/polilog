@@ -1,0 +1,155 @@
+<div class="page-header">
+  <h3>Issue : <a> <%= @issue.title %> </a></h3>
+</div>
+
+<div>
+  <div class="row">
+    <div class="col-sm-6">
+      <h5 style =" display: inline;" >Current Status: </h5> <p style =" display: inline;"><%= if @issue.status = !nil; "NA"; else; @issue.status; end %></p>
+    </div>
+
+    <div class="col-sm-6">
+      <h5 style =" display: inline;" >Upcoming Voting: </h5> <p style =" display: inline;"><%= if @issue.source = !nil; "NA"; else; @issue.source; end %></p>
+    </div>
+  </div>
+  <h5><strong>Description:</strong></h5>
+  <p><%= @issue.description %></p>
+</div>
+
+
+<ul class="nav nav-tabs" style="margin-bottom: 20px;">
+  <li class="active"><a href="#articles" data-toggle="tab">Related Articles</a></li>
+  <li><a href="#discussion" data-toggle="tab">Discussion</a></li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+
+  <div class="tab-pane fade active in" id="articles">
+
+    <ul class="list-group">
+
+      <% @issue.related_articles.each do |article| %>
+
+      <li class="list-group-item">
+
+        <a class="btn btn-success btn-sm" href="/delete_tag_issue/<%= article.tag_issues.find_by({ :issue_id => @issue.id }).id %>" style="float: left; margin-right: 3px;"><i class="fa fa-times"></i> Un-Tag</a>
+
+        <a href="<%= article.source %>" style="display: inline;"><h5> <%= article.title %> </h5></a>
+
+
+        <p class="list-group-item-text hidden-md hidden-lg hidden-xl"><%= truncate(article.description, :length => 30) %></p>
+        <p class="list-group-item-text hidden-sm hidden-xs"><%= truncate(article.description, :length => 200) %></p>
+
+      </li>
+
+      <% end %>
+
+    </ul>
+  </div>
+
+  <div class="tab-pane fade" id="discussion">
+
+
+    <!-- Button trigger modal -->
+    <div class="col-sm-offset-3 col-sm-6">
+    <button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#newcomment">
+      Add Comment
+    </button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="newcomment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-md-12">
+                <form action="/create_comment" method="post">
+                  <!-- Hidden input for authenticity token to protect from forgery -->
+                  <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+                  <input type="hidden" id="issue_id" name="issue_id" placeholder="Issue" class="form-control" value="<%= @issue.id %>">
+                  <input type="hidden" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= current_user.id %>">
+
+                  <!-- Label and input for position -->
+
+                  <div class="form-group">
+                    <label for="position" class="col-lg-6 control-label">Position:</label>
+                    <div class="col-lg-6">
+                      <select class="form-control" id="position" name="position">
+                        <option>Pro</option>
+                        <option>Con</option>
+                      </select>
+                    </div>
+                  </div>
+
+
+                  <!-- Label and input for content -->
+
+                  <div class="form-group" style="margin-bottom: 10px;">
+                    <label for="content" class="col-lg-12 control-label">Comment:</label>
+                    <div class="col-lg-12">
+                      <textarea id="content" name="content" placeholder="Content" class="form-control" rows="3"></textarea>
+                    </div>
+                  </div>
+
+
+                  <button class="btn btn-primary">
+                    Create Comment
+                  </button>
+                  <a data-dismiss="modal" href="#">Cancel</a>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-sm-offset-1 col-sm-5">
+        <ul class="list-group">
+          <h3>Pros</h3>
+          <% @issue.comments.where(position: "Pro").each do |comment| %>
+          <li class="list-group-item list-group-item-success">
+            <p><strong> <%= comment.user.username %>:</strong> <%= comment.content %></p>
+          </li>
+          <% end %>
+
+        </ul>
+      </div>
+
+      <div class="col-sm-5">
+
+        <ul class="list-group">
+          <h3>Cons</h3>
+          <% @issue.comments.where(position: "Con").each do |comment| %>
+          <li class="list-group-item list-group-item-danger">
+            <p><strong> <%= comment.user.username %>:</strong> <%= comment.content %></p>
+          </li>
+          <% end %>
+
+        </ul>
+
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+</div>

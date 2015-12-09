@@ -1,0 +1,45 @@
+
+<% if type == "my"; @issues = @my_issues; end %>
+
+<div class="row">
+  <div class="col-md-12 limit">
+    <table class="table table-striped table-hover">
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+
+      <% @issues.each do |issue| %>
+      <tr>
+        <td><%= issue.title %></td>
+        <td class= "hidden-md hidden-lg hidden-xl"><%= truncate(issue.description, :length => 30) %></td>
+        <td class= "hidden-sm hidden-xs"><%= truncate(issue.description, :length => 200) %></td>
+        <td>
+          <a href="/issues/<%= issue.id %>" class="btn btn-primary btn-sm">view</a>
+
+
+        <% if  issue.followers.pluck(:id).include?(current_user.id) %>
+          <a class="btn btn-success btn-sm" href="/delete_follow_issue/<%= issue.follow_issues.find_by({ :user_id => current_user.id }).id %>"><i class="fa fa-times"></i> Un-Follow</a>
+
+        <% else %>
+
+        <form action="/create_follow_issue" method="post" style="display: inline;">
+          <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+          <input type="hidden" id="user_id" name="user_id" class="form-control" value="<%= current_user.id %>">
+          <input type="hidden" id="issue_id" name="issue_id" class="form-control" value="<%= issue.id %>">
+          <button class="btn btn-default btn-sm">
+            Follow
+          </button>
+        </form
+
+        <% end %>
+        </td>
+
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+

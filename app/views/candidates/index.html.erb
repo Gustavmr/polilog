@@ -1,0 +1,49 @@
+<div class="page-header">
+  <h1>
+    Candidates
+    <a href="/candidates/new" class="btn btn-lg btn-success btn-sm"><i class="fa fa-plus-circle"></i><strong>Add New</strong></a>
+  </h1>
+</div>
+
+<ul class="nav nav-tabs" style="margin-bottom: 20px;">
+  <li class=""><a href="#all_candidates" data-toggle="tab" aria-expanded="false">All Candidates</a></li>
+  <li class=""><a href="#my_candidates" data-toggle="tab" aria-expanded="false">My Candidates</a></li>
+</ul>
+
+<div class="row" style="margin-bottom: 30px;">
+  <%= search_form_for @q do |f| %>
+
+  <div class="form-group">
+    <%= f.label :name_cont, "Search by Name:" %>
+    <%= f.text_field :name_cont, :class => "form-control", :placeholder => "Enter a few characters" %>
+  </div>
+
+  <%= f.submit :class => "btn btn-primary btn-sm" %>
+
+  <a href="/candidates" class="btn btn-default btn-sm">Clear filters</a>
+
+  <% end %>
+</div>
+
+
+
+<div id="myTabContent" class="tab-content">
+
+  <div class="tab-pane fade active in" id="all_candidates">
+    <p>
+
+      <%= render partial: "displaycandidates", locals: {type: "all"} %>
+    </p>
+  </div>
+
+  <div class="tab-pane fade" id="my_candidates">
+    <p>
+
+      <%= render partial: "displaycandidates", locals: {type: "my"} %>
+
+    </p>
+  </div>
+
+</div>
+
+

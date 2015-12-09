@@ -1,0 +1,80 @@
+
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-3">
+      <img class="group list-group-image img-rounded" src=" <%= @candidate.image %> " alt="" style= "padding: 30px;">
+
+      <div class="btn-group btn-group-justified btn-group-sm">
+        <a href="/candidates" class="btn btn-primary ">
+          Back
+        </a>
+        <a href="/candidates/<%= @candidate.id %>/edit" class="btn btn-primary">
+          Edit
+        </a>
+        <a href="/delete_candidate/<%= @candidate.id %>" class="btn btn-primary" rel="nofollow">
+          Delete
+        </a>
+      </div>
+    </div>
+
+
+
+    <div class="col-sm-9">
+      <div class="page-header">
+        <h2> <%= @candidate.name %></h2>
+        <h5 style =" display: inline;" >Political Affiliation: </h5> <p style =" display: inline;"><%= @candidate.party %></p>
+      </div>
+
+      <div>
+        <div class="row">
+          <div class="col-sm-6">
+            <h5 style =" display: inline;" >Current Position: </h5> <p style =" display: inline;"> <%= @candidate.current_position %></p>
+          </div>
+
+          <div class="col-sm-6">
+            <h5 style =" display: inline;" >Upcoming Candidacy: </h5> <p style =" display: inline;"><%= @candidate.new_position  %></p>
+          </div>
+        </div>
+        <h5><strong>Bio:</strong></h5>
+        <p><%= @candidate.bio %></p>
+      </div>
+
+      <!-- Article list -->
+
+      <div class="page-header">
+        <h4>Tagged Articles</h4>
+      </div>
+
+        <ul class="list-group">
+
+        <% @candidate.related_articles.each do |article| %>
+
+          <li class="list-group-item">
+
+            <a class="btn btn-success btn-sm" href="/delete_tag_candidate/<%= article.tag_candidates.find_by({ :candidate_id => @candidate.id }).id %>" style="float: left; margin-right: 3px;"><i class="fa fa-times"></i> Un-Tag</a>
+
+            <a href="<%= article.source %>" style="display: inline;"><h5> <%= article.title %> </h5></a>
+
+
+            <p class="list-group-item-text hidden-md hidden-lg hidden-xl"><%= truncate(article.description, :length => 30) %></p>
+            <p class="list-group-item-text hidden-sm hidden-xs"><%= truncate(article.description, :length => 200) %></p>
+
+          </li>
+
+        <% end %>
+
+        </ul>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,46 @@
+<!-- Validation failure messages -->
+<% if @follow_candidate.errors.any? %>
+  <% @follow_candidate.errors.full_messages.each do |message| %>
+    <div class="alert alert-dismissable alert-danger">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <%= message %>
+    </div>
+  <% end %>
+<% end %>
+
+<div class="page-header">
+  <h3>Edit Follow Candidate #<%= @follow_candidate.id %></h3>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <form action="/update_follow_candidate/<%= @follow_candidate.id %>" method="post">
+      <!-- Hidden input for authenticity token to protect from forgery -->
+      <input name="authenticity_token" type="hidden" value="<%= form_authenticity_token %>">
+
+      <!-- Label and input for user_id -->
+      <div class="form-group">
+        <label for="user_id" class="control-label">
+          User
+        </label>
+
+        <input type="text" id="user_id" name="user_id" placeholder="User" class="form-control" value="<%= @follow_candidate.user_id %>">
+      </div>
+
+      <!-- Label and input for candidate_id -->
+      <div class="form-group">
+        <label for="candidate_id" class="control-label">
+          Candidate
+        </label>
+
+        <input type="text" id="candidate_id" name="candidate_id" placeholder="Candidate" class="form-control" value="<%= @follow_candidate.candidate_id %>">
+      </div>
+
+      <button class="btn btn-warning">
+        Update Follow Candidate
+      </button>
+      or
+      <a href="/follow_candidates/<%= @follow_candidate.id %>">Cancel</a>
+    </form>
+  </div>
+</div>
